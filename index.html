@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bangla Font Master Pro - Font Preview & Glyph Inspector</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- opentype.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
 
@@ -31,7 +27,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             padding: 12px;
         }
 
@@ -45,15 +41,14 @@
             border: 1px solid var(--border-color);
         }
 
-        /* Responsive Header Dropzone */
+        /* Header Drop Area */
         .widget-header {
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             color: #ffffff;
-            padding: 24px 16px;
+            padding: 32px 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            border-bottom: 2px dashed rgba(255, 255, 255, 0.4);
         }
 
         .widget-header:hover, .widget-header.dragover {
@@ -61,65 +56,22 @@
         }
 
         .widget-header h2 {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .widget-header p {
-            font-size: 13px;
+            font-size: 14px;
             opacity: 0.9;
         }
 
-        /* Controls Area */
-        .api-controls {
-            padding: 14px;
-            background: #f1f5f9;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .controls-row {
-            display: flex;
-            gap: 10px;
-            flex-direction: column;
-        }
-
-        @media (min-width: 600px) {
-            .controls-row {
-                flex-direction: row;
-            }
-        }
-
-        .search-box, .select-box {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            background: #fff;
-        }
-
-        .copy-btn {
-            background: #10b981;
-            color: #fff;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            display: none;
-            width: 100%;
-        }
-
-        /* Responsive Tabs */
+        /* Tabs */
         .widget-tabs {
             display: flex;
             background: #f8fafc;
             border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
         }
 
         .w-tab {
@@ -131,6 +83,7 @@
             color: var(--text-muted);
             cursor: pointer;
             border-bottom: 3px solid transparent;
+            white-space: nowrap;
             transition: all 0.2s;
         }
 
@@ -152,7 +105,7 @@
             display: block;
         }
 
-        /* Controls Toolbar */
+        /* Toolbar */
         .toolbar {
             display: flex;
             gap: 8px;
@@ -271,14 +224,17 @@
             margin-top: 12px;
         }
 
-        /* Info Table */
+        /* Metadata Table */
+        .meta-table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
         .info-table {
             width: 100%;
             border-collapse: collapse;
             background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
         }
 
         .info-table td {
@@ -295,8 +251,9 @@
         .info-table td:first-child {
             font-weight: 600;
             color: var(--text-muted);
-            width: 40%;
+            width: 35%;
             background: #f8fafc;
+            min-width: 120px;
         }
 
         /* Modal Inspector */
@@ -361,27 +318,16 @@
 <div class="container">
     <!-- Header Drop Area -->
     <div class="widget-header" id="dropZone" onclick="document.getElementById('fontLoader').click()">
-        <h2 id="topTitle">Bangla Font Master Pro</h2>
-        <p id="subTitle">ফন্ট ফাইল ক্লিক করে আপলোড বা ড্রাগ করুন (.ttf, .otf, .woff)</p>
+        <h2 id="topTitle">Font Master Pro</h2>
+        <p id="subTitle">এখানে ক্লিক করে ফন্ট ফাইল আপলোড করুন অথবা ড্রাগ অ্যান্ড ড্রপ করুন (.ttf, .otf, .woff)</p>
         <input type="file" id="fontLoader" accept=".ttf,.otf,.woff,.woff2" style="display: none;" />
-    </div>
-
-    <!-- API Controls -->
-    <div class="api-controls">
-        <div class="controls-row">
-            <input type="text" class="search-box" id="fontSearch" placeholder="গুগল বাংলা ফন্ট খুঁজুন..." />
-            <select id="googleFontSelect" class="select-box">
-                <option value="">লোড হচ্ছে...</option>
-            </select>
-        </div>
-        <button class="copy-btn" id="copyFontBtn">গুগল ফন্ট লিংক কপি করুন</button>
     </div>
 
     <!-- Navigation Tabs -->
     <div class="widget-tabs">
         <div class="w-tab active" onclick="switchWTab(event, 'w-write')">টাইপ প্রিভিউ</div>
         <div class="w-tab" onclick="switchWTab(event, 'w-glyphs')">গ্লিফ ইনস্পেক্টর</div>
-        <div class="w-tab" onclick="switchWTab(event, 'w-info')">মেটাডাটা / ইনফো</div>
+        <div class="w-tab" onclick="switchWTab(event, 'w-info')">মেটাডাটা ও ইনফো</div>
     </div>
 
     <!-- Tab Sections -->
@@ -415,24 +361,19 @@
         <div class="w-section" id="w-glyphs">
             <div class="glyph-wall" id="wGlyphGrid">
                 <p style="color: #64748b; grid-column: 1/-1; padding: 20px; text-align: center;">
-                    লোকাল ফন্ট ফাইল (.ttf/.otf) আপলোড করলে সম্পূর্ণ গ্লিফ চার্ট দেখা যাবে।
+                    ফন্ট ফাইল (.ttf/.otf/.woff) আপলোড করলে সম্পূর্ণ গ্লিফ চার্ট দেখা যাবে।
                 </p>
             </div>
             <button id="loadMoreBtn">আরও দেখুন (Load More)</button>
         </div>
 
-        <!-- Section 3: Metadata Info -->
+        <!-- Section 3: Detailed Metadata Table -->
         <div class="w-section" id="w-info">
-            <table class="info-table">
-                <tr><td>Font Family</td><td id="infoName">Tiro Bangla</td></tr>
-                <tr><td>Font Style</td><td id="infoSubfamily">Regular</td></tr>
-                <tr><td>Source / Type</td><td id="infoSource">Google Fonts (Online)</td></tr>
-                <tr><td>Total Glyphs</td><td id="infoGlyphs">N/A</td></tr>
-                <tr><td>Full Name</td><td id="infoFullName">Tiro Bangla Regular</td></tr>
-                <tr><td>Version</td><td id="infoVersion">N/A</td></tr>
-                <tr><td>Designer / Author</td><td id="infoDesigner">N/A</td></tr>
-                <tr><td>Units Per Em</td><td id="infoEm">N/A</td></tr>
-            </table>
+            <div class="meta-table-container">
+                <table class="info-table" id="fullMetaTable">
+                    <tr><td>Status</td><td>কোনো ফন্ট ফাইল আপলোড করা হয়নি। উপরে ক্লিক করে ফাইল লোড করুন।</td></tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -453,99 +394,32 @@
 </div>
 
 <script>
-    const GOOGLE_API_KEY = 'AIzaSyDW4Ge5iZNPhGH6ig5WSrGGz8vAUDWst1o'; 
-    let activeFontName = "'Tiro Bangla', serif";
+    let activeFontName = "sans-serif";
     let isBold = false, isItalic = false, isUnderline = false;
     let currentFontObj = null;
     let glyphsShown = 0;
     const pageSize = 120;
-    let allGoogleFonts = [];
 
     // UI Elements
-    const fontSelect = document.getElementById('googleFontSelect');
-    const copyBtn = document.getElementById('copyFontBtn');
     const wPreview = document.getElementById('wPreview');
     const glyphGrid = document.getElementById('wGlyphGrid');
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     const dropZone = document.getElementById('dropZone');
+    const fullMetaTable = document.getElementById('fullMetaTable');
 
     // Modal
     const glyphModal = document.getElementById('glyphModal');
     const modalCanvas = document.getElementById('modalCanvas');
 
-    // 1. Google Fonts Fetch
-    async function loadGoogleFonts() {
-        const url = `https://www.googleapis.com/webfonts/v1/webfonts?subset=bengali&sort=popularity&key=${GOOGLE_API_KEY}`;
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            allGoogleFonts = data.items || [];
-            populateSelect(allGoogleFonts);
-        } catch (err) {
-            fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
-            .then(r => r.json()).then(d => {
-                const cleanData = JSON.parse(d.contents);
-                allGoogleFonts = cleanData.items || [];
-                populateSelect(allGoogleFonts);
-            }).catch(() => {
-                fontSelect.innerHTML = '<option value="">অনলাইন ফন্ট লোড হয়নি</option>';
-            });
-        }
+    // Helper: Safely Extract Text from Opentype Names Table
+    function getNameRecord(names, field) {
+        if (!names || !names[field]) return 'N/A';
+        const item = names[field];
+        if (typeof item === 'string') return item;
+        return item.en || Object.values(item)[0] || 'N/A';
     }
 
-    function populateSelect(fonts) {
-        fontSelect.innerHTML = '<option value="">অনলাইন বাংলা ফন্ট বেছে নিন...</option>';
-        fonts.forEach(f => {
-            const op = document.createElement('option');
-            op.value = f.family; op.textContent = f.family;
-            fontSelect.appendChild(op);
-        });
-    }
-
-    document.getElementById('fontSearch').oninput = function(e) {
-        const term = e.target.value.toLowerCase();
-        const filtered = allGoogleFonts.filter(f => f.family.toLowerCase().includes(term));
-        populateSelect(filtered);
-    };
-
-    fontSelect.onchange = function() {
-        const family = this.value;
-        if(!family) return;
-        
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = `https://fonts.googleapis.com/css2?family=${family.replace(/ /g, '+')}:ital,wght@0,400;0,700;1,400;1,700&display=swap`;
-        document.head.appendChild(link);
-        
-        activeFontName = `'${family}', sans-serif`;
-        updatePreview();
-        
-        copyBtn.style.display = 'block';
-        document.getElementById('topTitle').innerText = family;
-        document.getElementById('infoName').innerText = family;
-        document.getElementById('infoSubfamily').innerText = "Regular / Variable";
-        document.getElementById('infoSource').innerText = "Google Fonts (Web Font)";
-        document.getElementById('infoGlyphs').innerText = "অনলাইন (ফাইল দিন)";
-        document.getElementById('infoFullName').innerText = family;
-        document.getElementById('infoVersion').innerText = "N/A";
-        document.getElementById('infoDesigner').innerText = "Google Fonts";
-        document.getElementById('infoEm').innerText = "N/A";
-        
-        glyphGrid.innerHTML = '<p style="text-align:center; color:#64748b; grid-column:1/-1; padding:20px;">গ্লিফ দেখতে পিসি/ফোন থেকে ফাইল আপলোড করুন।</p>';
-        loadMoreBtn.style.display = 'none';
-    };
-
-    copyBtn.onclick = function() {
-        const family = fontSelect.value;
-        const url = `https://fonts.google.com/specimen/${family.replace(/ /g, '+')}`;
-        navigator.clipboard.writeText(url).then(() => {
-            const txt = copyBtn.innerText;
-            copyBtn.innerText = "লিংক কপি হয়েছে! ✓";
-            setTimeout(() => copyBtn.innerText = txt, 2000);
-        });
-    };
-
-    // 2. Local Font Loader & Metadata Reader
+    // Drag & Drop & File Select
     ['dragenter', 'dragover'].forEach(evt => {
         dropZone.addEventListener(evt, (e) => { e.preventDefault(); dropZone.classList.add('dragover'); }, false);
     });
@@ -562,11 +436,6 @@
     document.getElementById('fontLoader').onchange = function(e) {
         if(e.target.files.length > 0) handleFontFile(e.target.files[0]);
     };
-
-    function getNameTableValue(names, key) {
-        if (!names || !names[key]) return 'N/A';
-        return names[key].en || Object.values(names[key])[0] || 'N/A';
-    }
 
     function handleFontFile(file) {
         const reader = new FileReader();
@@ -587,29 +456,45 @@
                 glyphsShown = 0;
                 renderGlyphs();
                 
-                // Detailed Metadata Parsing
-                const n = currentFontObj.names;
-                document.getElementById('infoName').innerText = getNameTableValue(n, 'fontFamily') !== 'N/A' ? getNameTableValue(n, 'fontFamily') : file.name;
-                document.getElementById('infoSubfamily').innerText = getNameTableValue(n, 'fontSubfamily');
-                document.getElementById('infoSource').innerText = "Local Upload (" + file.name + ")";
-                document.getElementById('infoGlyphs').innerText = currentFontObj.numGlyphs || 'N/A';
-                document.getElementById('infoFullName').innerText = getNameTableValue(n, 'fullName');
-                document.getElementById('infoVersion').innerText = getNameTableValue(n, 'version');
-                document.getElementById('infoDesigner').innerText = getNameTableValue(n, 'designer') !== 'N/A' ? getNameTableValue(n, 'designer') : getNameTableValue(n, 'copyright');
-                document.getElementById('infoEm').innerText = currentFontObj.unitsPerEm || 'N/A';
+                // Extract Metadata
+                const n = currentFontObj.names || {};
+                const fontFam = getNameRecord(n, 'fontFamily') !== 'N/A' ? getNameRecord(n, 'fontFamily') : file.name;
                 
-                document.getElementById('topTitle').innerText = getNameTableValue(n, 'fontFamily') !== 'N/A' ? getNameTableValue(n, 'fontFamily') : file.name;
+                let metaHTML = `
+                    <tr><td>Font Family</td><td>${fontFam}</td></tr>
+                    <tr><td>Font Subfamily (Style)</td><td>${getNameRecord(n, 'fontSubfamily')}</td></tr>
+                    <tr><td>Full Font Name</td><td>${getNameRecord(n, 'fullName')}</td></tr>
+                    <tr><td>PostScript Name</td><td>${getNameRecord(n, 'postScriptName')}</td></tr>
+                    <tr><td>Unique ID</td><td>${getNameRecord(n, 'uniqueID')}</td></tr>
+                    <tr><td>Version</td><td>${getNameRecord(n, 'version')}</td></tr>
+                    <tr><td>Total Glyphs</td><td>${currentFontObj.numGlyphs || 'N/A'}</td></tr>
+                    <tr><td>Units Per Em</td><td>${currentFontObj.unitsPerEm || 'N/A'}</td></tr>
+                    <tr><td>Ascender / Descender</td><td>${currentFontObj.ascender} / ${currentFontObj.descender}</td></tr>
+                    <tr><td>Designer / Author</td><td>${getNameRecord(n, 'designer')}</td></tr>
+                    <tr><td>Manufacturer / Publisher</td><td>${getNameRecord(n, 'manufacturer')}</td></tr>
+                    <tr><td>Copyright</td><td>${getNameRecord(n, 'copyright')}</td></tr>
+                    <tr><td>Trademark</td><td>${getNameRecord(n, 'trademark')}</td></tr>
+                    <tr><td>License Description</td><td>${getNameRecord(n, 'license')}</td></tr>
+                    <tr><td>License URL</td><td>${getNameRecord(n, 'licenseURL')}</td></tr>
+                    <tr><td>Vendor URL</td><td>${getNameRecord(n, 'vendorURL')}</td></tr>
+                    <tr><td>File Name</td><td>${file.name}</td></tr>
+                    <tr><td>File Size</td><td>${(file.size / 1024).toFixed(2)} KB</td></tr>
+                `;
+
+                fullMetaTable.innerHTML = metaHTML;
+                document.getElementById('topTitle').innerText = fontFam;
+                document.getElementById('subTitle').innerText = `ফাইল আপলোড হয়েছে: ${file.name}`;
+
             } catch(err) { 
-                alert("ফন্ট ফাইলটি পার্স করা যায়নি! সঠিক ফন্ট ফাইল দিন।"); 
+                alert("ফন্ট ফাইলটি পার্স করা সম্ভব হয়নি! সঠিক .ttf, .otf বা .woff ফাইল ব্যবহার করুন।"); 
             }
             
             updatePreview();
-            copyBtn.style.display = 'none';
         };
         reader.readAsArrayBuffer(file);
     }
 
-    // 3. Render Glyphs
+    // Render Glyphs
     function renderGlyphs() {
         if(!currentFontObj) return;
         const total = currentFontObj.numGlyphs;
@@ -638,7 +523,7 @@
 
     loadMoreBtn.onclick = renderGlyphs;
 
-    // 4. Modal
+    // Modal Inspector
     function openGlyphModal(glyph, index) {
         const ratio = window.devicePixelRatio || 2;
         modalCanvas.width = 100 * ratio;
@@ -666,7 +551,7 @@
     document.getElementById('modalClose').onclick = () => glyphModal.classList.remove('active');
     glyphModal.onclick = (e) => { if(e.target === glyphModal) glyphModal.classList.remove('active'); };
 
-    // 5. Update Preview Text
+    // Update Preview Text
     function updatePreview() {
         wPreview.style.fontFamily = activeFontName;
         wPreview.style.fontSize = document.getElementById('wSize').value + "px";
@@ -691,8 +576,6 @@
         document.getElementById(tabId).classList.add('active');
         evt.currentTarget.classList.add('active');
     }
-
-    window.onload = loadGoogleFonts;
 </script>
 
 </body>
