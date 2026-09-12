@@ -32,7 +32,7 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
-            padding: 20px 10px;
+            padding: 12px;
         }
 
         .container {
@@ -41,19 +41,18 @@
             background: var(--card-bg);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
         }
 
-        /* Header Dropzone */
+        /* Responsive Header Dropzone */
         .widget-header {
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             color: #ffffff;
-            padding: 30px 20px;
+            padding: 24px 16px;
             text-align: center;
             cursor: pointer;
-            transition: background 0.3s ease;
-            position: relative;
+            transition: all 0.3s ease;
             border-bottom: 2px dashed rgba(255, 255, 255, 0.4);
         }
 
@@ -62,65 +61,61 @@
         }
 
         .widget-header h2 {
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 700;
             margin-bottom: 6px;
         }
 
         .widget-header p {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.9;
         }
 
-        /* Api & Controls */
+        /* Controls Area */
         .api-controls {
-            padding: 16px;
+            padding: 14px;
             background: #f1f5f9;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .controls-row {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        @media (min-width: 600px) {
+            .controls-row {
+                flex-direction: row;
+            }
         }
 
         .search-box, .select-box {
-            flex: 1;
-            min-width: 200px;
-            padding: 10px 14px;
+            width: 100%;
+            padding: 10px 12px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             font-size: 14px;
             outline: none;
             background: #fff;
-            transition: border-color 0.2s;
-        }
-
-        .search-box:focus, .select-box:focus {
-            border-color: var(--primary-color);
         }
 
         .copy-btn {
             background: #10b981;
             color: #fff;
             border: none;
-            padding: 10px 16px;
+            padding: 10px 14px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             display: none;
-            transition: background 0.2s;
+            width: 100%;
         }
 
-        .copy-btn:hover {
-            background: #059669;
-        }
-
-        /* Tabs */
+        /* Responsive Tabs */
         .widget-tabs {
             display: flex;
             background: #f8fafc;
@@ -129,9 +124,10 @@
 
         .w-tab {
             flex: 1;
-            padding: 14px;
+            padding: 12px 8px;
             text-align: center;
             font-weight: 600;
+            font-size: 14px;
             color: var(--text-muted);
             cursor: pointer;
             border-bottom: 3px solid transparent;
@@ -144,9 +140,8 @@
             background: #fff;
         }
 
-        /* Body & Sections */
         .widget-body {
-            padding: 20px;
+            padding: 16px;
         }
 
         .w-section {
@@ -157,24 +152,22 @@
             display: block;
         }
 
-        /* Toolbar */
+        /* Controls Toolbar */
         .toolbar {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .tool-btn {
             flex: 1;
-            padding: 8px 12px;
+            padding: 8px;
             border: 1px solid var(--border-color);
             background: #fff;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 15px;
-            color: var(--text-main);
-            transition: all 0.2s;
+            font-size: 14px;
         }
 
         .tool-btn.active {
@@ -183,65 +176,64 @@
             border-color: var(--primary-color);
         }
 
-        /* Sliders Grid */
+        /* Sliders Layout */
         .slider-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
             background: #f8fafc;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
             border: 1px solid var(--border-color);
         }
 
         .slider-group label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--text-muted);
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .slider-group input {
             width: 100%;
-            cursor: pointer;
         }
 
         #widgetInput {
             width: 100%;
-            height: 90px;
-            padding: 12px;
+            height: 80px;
+            padding: 10px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 16px;
+            margin-bottom: 12px;
+            font-size: 15px;
             outline: none;
             resize: vertical;
             font-family: inherit;
         }
 
         .widget-preview {
-            padding: 25px;
+            padding: 20px;
             border: 2px dashed var(--border-color);
-            border-radius: 10px;
-            min-height: 120px;
+            border-radius: 8px;
+            min-height: 100px;
             text-align: center;
             word-wrap: break-word;
             background: #fff;
-            transition: all 0.2s;
+            overflow-x: auto;
         }
 
-        /* Glyphs Section */
+        /* Glyphs Grid */
         .glyph-wall {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 10px;
-            max-height: 420px;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 8px;
+            max-height: 380px;
             overflow-y: auto;
             background: #f8fafc;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
         }
 
@@ -252,36 +244,34 @@
             align-items: center;
             justify-content: center;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: transform 0.15s, border-color 0.15s;
+            transition: transform 0.1s;
         }
 
-        .glyph-box:hover {
-            transform: scale(1.05);
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        .glyph-box:active {
+            transform: scale(0.95);
         }
 
         .glyph-box canvas {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
         }
 
         #loadMoreBtn {
             background: var(--primary-color);
             color: #fff;
             border: none;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 6px;
             width: 100%;
             cursor: pointer;
             display: none;
             font-weight: 600;
-            margin-top: 15px;
+            margin-top: 12px;
         }
 
-        /* Info Section */
+        /* Info Table */
         .info-table {
             width: 100%;
             border-collapse: collapse;
@@ -292,9 +282,10 @@
         }
 
         .info-table td {
-            padding: 12px 16px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
+            font-size: 13px;
+            word-break: break-word;
         }
 
         .info-table tr:last-child td {
@@ -304,7 +295,7 @@
         .info-table td:first-child {
             font-weight: 600;
             color: var(--text-muted);
-            width: 35%;
+            width: 40%;
             background: #f8fafc;
         }
 
@@ -317,6 +308,7 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            padding: 16px;
         }
 
         .modal.active {
@@ -325,26 +317,25 @@
 
         .modal-content {
             background: #fff;
-            padding: 24px;
+            padding: 20px;
             border-radius: 12px;
             max-width: 320px;
-            width: 90%;
+            width: 100%;
             text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
             position: relative;
         }
 
         .modal-close {
             position: absolute;
-            top: 10px; right: 15px;
-            font-size: 20px;
+            top: 8px; right: 12px;
+            font-size: 22px;
             cursor: pointer;
             color: var(--text-muted);
         }
 
         .modal-canvas {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             margin: 10px auto;
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -352,7 +343,7 @@
         }
 
         .modal-info {
-            font-size: 13px;
+            font-size: 12px;
             text-align: left;
             margin-top: 10px;
             background: #f1f5f9;
@@ -361,7 +352,7 @@
         }
 
         .modal-info div {
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
     </style>
 </head>
@@ -371,14 +362,14 @@
     <!-- Header Drop Area -->
     <div class="widget-header" id="dropZone" onclick="document.getElementById('fontLoader').click()">
         <h2 id="topTitle">Bangla Font Master Pro</h2>
-        <p id="subTitle">ফাইল ড্রাগ করুন বা আপলোড করতে এখানে ক্লিক করুন (.ttf, .otf, .woff)</p>
+        <p id="subTitle">ফন্ট ফাইল ক্লিক করে আপলোড বা ড্রাগ করুন (.ttf, .otf, .woff)</p>
         <input type="file" id="fontLoader" accept=".ttf,.otf,.woff,.woff2" style="display: none;" />
     </div>
 
     <!-- API Controls -->
     <div class="api-controls">
         <div class="controls-row">
-            <input type="text" class="search-box" id="fontSearch" placeholder="গুগল বাংলা ফন্ট খুঁজুন (যেমন: Siliguri, Noto...)" />
+            <input type="text" class="search-box" id="fontSearch" placeholder="গুগল বাংলা ফন্ট খুঁজুন..." />
             <select id="googleFontSelect" class="select-box">
                 <option value="">লোড হচ্ছে...</option>
             </select>
@@ -386,16 +377,16 @@
         <button class="copy-btn" id="copyFontBtn">গুগল ফন্ট লিংক কপি করুন</button>
     </div>
 
-    <!-- Tabs Header -->
+    <!-- Navigation Tabs -->
     <div class="widget-tabs">
         <div class="w-tab active" onclick="switchWTab(event, 'w-write')">টাইপ প্রিভিউ</div>
         <div class="w-tab" onclick="switchWTab(event, 'w-glyphs')">গ্লিফ ইনস্পেক্টর</div>
-        <div class="w-tab" onclick="switchWTab(event, 'w-info')">ফন্ট ইনফরমেশন</div>
+        <div class="w-tab" onclick="switchWTab(event, 'w-info')">মেটাডাটা / ইনফো</div>
     </div>
 
-    <!-- Body Sections -->
+    <!-- Tab Sections -->
     <div class="widget-body">
-        <!-- Section 1: Write / Preview -->
+        <!-- Section 1: Preview -->
         <div class="w-section active" id="w-write">
             <div class="toolbar">
                 <button class="tool-btn" id="btnBold">B</button>
@@ -404,15 +395,15 @@
             </div>
             <div class="slider-grid">
                 <div class="slider-group">
-                    <label>ফন্ট সাইজ (Size)</label>
-                    <input type="range" id="wSize" min="16" max="120" value="48" />
+                    <label>আকার (Size)</label>
+                    <input type="range" id="wSize" min="16" max="100" value="40" />
                 </div>
                 <div class="slider-group">
-                    <label>লাইন হাইট (Height)</label>
+                    <label>লাইন (Height)</label>
                     <input type="range" id="wLine" min="0.8" max="2.5" step="0.1" value="1.3" />
                 </div>
                 <div class="slider-group">
-                    <label>স্পেসিং (Spacing)</label>
+                    <label>স্পেস (Spacing)</label>
                     <input type="range" id="wSpace" min="-5" max="20" value="0" />
                 </div>
             </div>
@@ -423,32 +414,34 @@
         <!-- Section 2: Glyphs Inspector -->
         <div class="w-section" id="w-glyphs">
             <div class="glyph-wall" id="wGlyphGrid">
-                <p style="color: #64748b; grid-column: 1/-1; padding: 30px; text-align: center;">
-                    লোকাল ফন্ট (.ttf/.otf) আপলোড করলে এখানে সব গ্লিফ দেখা যাবে।
+                <p style="color: #64748b; grid-column: 1/-1; padding: 20px; text-align: center;">
+                    লোকাল ফন্ট ফাইল (.ttf/.otf) আপলোড করলে সম্পূর্ণ গ্লিফ চার্ট দেখা যাবে।
                 </p>
             </div>
             <button id="loadMoreBtn">আরও দেখুন (Load More)</button>
         </div>
 
-        <!-- Section 3: Font Information -->
+        <!-- Section 3: Metadata Info -->
         <div class="w-section" id="w-info">
             <table class="info-table">
-                <tr><td>ফন্টের নাম (Family)</td><td id="infoName">Tiro Bangla</td></tr>
-                <tr><td>উৎস (Source)</td><td id="infoSource">Google Fonts (Default)</td></tr>
-                <tr><td>সাব-ফ্যামিলি (Style)</td><td id="infoSubfamily">Regular</td></tr>
-                <tr><td>মোট গ্লিফ সংখ্যা</td><td id="infoGlyphs">N/A</td></tr>
-                <tr><td>ডিজাইনার / কপিরাইট</td><td id="infoDesigner">N/A</td></tr>
+                <tr><td>Font Family</td><td id="infoName">Tiro Bangla</td></tr>
+                <tr><td>Font Style</td><td id="infoSubfamily">Regular</td></tr>
+                <tr><td>Source / Type</td><td id="infoSource">Google Fonts (Online)</td></tr>
+                <tr><td>Total Glyphs</td><td id="infoGlyphs">N/A</td></tr>
+                <tr><td>Full Name</td><td id="infoFullName">Tiro Bangla Regular</td></tr>
+                <tr><td>Version</td><td id="infoVersion">N/A</td></tr>
+                <tr><td>Designer / Author</td><td id="infoDesigner">N/A</td></tr>
                 <tr><td>Units Per Em</td><td id="infoEm">N/A</td></tr>
             </table>
         </div>
     </div>
 </div>
 
-<!-- Glyph Detail Modal -->
+<!-- Modal Inspector -->
 <div class="modal" id="glyphModal">
     <div class="modal-content">
         <span class="modal-close" id="modalClose">&times;</span>
-        <h4 id="modalGlyphTitle">Glyph Inspector</h4>
+        <h4>Glyph Details</h4>
         <canvas class="modal-canvas" id="modalCanvas"></canvas>
         <div class="modal-info">
             <div><strong>Glyph Index:</strong> <span id="mIndex">-</span></div>
@@ -465,10 +458,10 @@
     let isBold = false, isItalic = false, isUnderline = false;
     let currentFontObj = null;
     let glyphsShown = 0;
-    const pageSize = 150;
+    const pageSize = 120;
     let allGoogleFonts = [];
 
-    // Elements
+    // UI Elements
     const fontSelect = document.getElementById('googleFontSelect');
     const copyBtn = document.getElementById('copyFontBtn');
     const wPreview = document.getElementById('wPreview');
@@ -476,11 +469,11 @@
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     const dropZone = document.getElementById('dropZone');
 
-    // Modal Elements
+    // Modal
     const glyphModal = document.getElementById('glyphModal');
     const modalCanvas = document.getElementById('modalCanvas');
 
-    // 1. Load Google Fonts
+    // 1. Google Fonts Fetch
     async function loadGoogleFonts() {
         const url = `https://www.googleapis.com/webfonts/v1/webfonts?subset=bengali&sort=popularity&key=${GOOGLE_API_KEY}`;
         try {
@@ -489,14 +482,13 @@
             allGoogleFonts = data.items || [];
             populateSelect(allGoogleFonts);
         } catch (err) {
-            // Proxy Fallback
             fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
             .then(r => r.json()).then(d => {
                 const cleanData = JSON.parse(d.contents);
                 allGoogleFonts = cleanData.items || [];
                 populateSelect(allGoogleFonts);
             }).catch(() => {
-                fontSelect.innerHTML = '<option value="">Google Fonts লোড করতে সমস্যা হয়েছে</option>';
+                fontSelect.innerHTML = '<option value="">অনলাইন ফন্ট লোড হয়নি</option>';
             });
         }
     }
@@ -510,14 +502,12 @@
         });
     }
 
-    // Search Box
     document.getElementById('fontSearch').oninput = function(e) {
         const term = e.target.value.toLowerCase();
         const filtered = allGoogleFonts.filter(f => f.family.toLowerCase().includes(term));
         populateSelect(filtered);
     };
 
-    // Google Font Select Change
     fontSelect.onchange = function() {
         const family = this.value;
         if(!family) return;
@@ -530,20 +520,21 @@
         activeFontName = `'${family}', sans-serif`;
         updatePreview();
         
-        copyBtn.style.display = 'inline-block';
+        copyBtn.style.display = 'block';
         document.getElementById('topTitle').innerText = family;
         document.getElementById('infoName').innerText = family;
-        document.getElementById('infoSource').innerText = "Google Fonts (Online)";
-        document.getElementById('infoSubfamily').innerText = "Regular / Dynamic";
-        document.getElementById('infoGlyphs').innerText = "লক করা (Local File লোড করুন)";
-        document.getElementById('infoDesigner').innerText = "N/A";
+        document.getElementById('infoSubfamily').innerText = "Regular / Variable";
+        document.getElementById('infoSource').innerText = "Google Fonts (Web Font)";
+        document.getElementById('infoGlyphs').innerText = "অনলাইন (ফাইল দিন)";
+        document.getElementById('infoFullName').innerText = family;
+        document.getElementById('infoVersion').innerText = "N/A";
+        document.getElementById('infoDesigner').innerText = "Google Fonts";
         document.getElementById('infoEm').innerText = "N/A";
         
-        glyphGrid.innerHTML = '<p style="text-align:center; color:#64748b; grid-column:1/-1; padding:30px;">গ্লিফ দেখতে ফন্ট ফাইলটি আপলোড করুন।</p>';
+        glyphGrid.innerHTML = '<p style="text-align:center; color:#64748b; grid-column:1/-1; padding:20px;">গ্লিফ দেখতে পিসি/ফোন থেকে ফাইল আপলোড করুন।</p>';
         loadMoreBtn.style.display = 'none';
     };
 
-    // Copy Button
     copyBtn.onclick = function() {
         const family = fontSelect.value;
         const url = `https://fonts.google.com/specimen/${family.replace(/ /g, '+')}`;
@@ -554,24 +545,28 @@
         });
     };
 
-    // 2. Drag & Drop and File Upload
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => { e.preventDefault(); dropZone.classList.add('dragover'); }, false);
+    // 2. Local Font Loader & Metadata Reader
+    ['dragenter', 'dragover'].forEach(evt => {
+        dropZone.addEventListener(evt, (e) => { e.preventDefault(); dropZone.classList.add('dragover'); }, false);
     });
 
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); }, false);
+    ['dragleave', 'drop'].forEach(evt => {
+        dropZone.addEventListener(evt, (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); }, false);
     });
 
     dropZone.addEventListener('drop', (e) => {
         const dt = e.dataTransfer;
-        const files = dt.files;
-        if (files.length > 0) handleFontFile(files[0]);
+        if (dt.files.length > 0) handleFontFile(dt.files[0]);
     });
 
     document.getElementById('fontLoader').onchange = function(e) {
         if(e.target.files.length > 0) handleFontFile(e.target.files[0]);
     };
+
+    function getNameTableValue(names, key) {
+        if (!names || !names[key]) return 'N/A';
+        return names[key].en || Object.values(names[key])[0] || 'N/A';
+    }
 
     function handleFontFile(file) {
         const reader = new FileReader();
@@ -592,18 +587,20 @@
                 glyphsShown = 0;
                 renderGlyphs();
                 
-                // Update Meta Info
-                const names = currentFontObj.names;
-                document.getElementById('infoName').innerText = names.fontFamily ? names.fontFamily.en : file.name;
-                document.getElementById('infoSubfamily').innerText = names.fontSubfamily ? names.fontSubfamily.en : 'N/A';
-                document.getElementById('infoSource').innerText = "Local File (" + file.name + ")";
-                document.getElementById('infoGlyphs').innerText = currentFontObj.numGlyphs;
-                document.getElementById('infoDesigner').innerText = names.designer ? names.designer.en : (names.copyright ? names.copyright.en : 'N/A');
+                // Detailed Metadata Parsing
+                const n = currentFontObj.names;
+                document.getElementById('infoName').innerText = getNameTableValue(n, 'fontFamily') !== 'N/A' ? getNameTableValue(n, 'fontFamily') : file.name;
+                document.getElementById('infoSubfamily').innerText = getNameTableValue(n, 'fontSubfamily');
+                document.getElementById('infoSource').innerText = "Local Upload (" + file.name + ")";
+                document.getElementById('infoGlyphs').innerText = currentFontObj.numGlyphs || 'N/A';
+                document.getElementById('infoFullName').innerText = getNameTableValue(n, 'fullName');
+                document.getElementById('infoVersion').innerText = getNameTableValue(n, 'version');
+                document.getElementById('infoDesigner').innerText = getNameTableValue(n, 'designer') !== 'N/A' ? getNameTableValue(n, 'designer') : getNameTableValue(n, 'copyright');
                 document.getElementById('infoEm').innerText = currentFontObj.unitsPerEm || 'N/A';
                 
-                document.getElementById('topTitle').innerText = names.fontFamily ? names.fontFamily.en : file.name;
+                document.getElementById('topTitle').innerText = getNameTableValue(n, 'fontFamily') !== 'N/A' ? getNameTableValue(n, 'fontFamily') : file.name;
             } catch(err) { 
-                alert("ফন্ট ফাইলটি পার্স করা সম্ভব হয়নি! সঠিক .ttf বা .otf ফাইল দিন।"); 
+                alert("ফন্ট ফাইলটি পার্স করা যায়নি! সঠিক ফন্ট ফাইল দিন।"); 
             }
             
             updatePreview();
@@ -612,7 +609,7 @@
         reader.readAsArrayBuffer(file);
     }
 
-    // 3. Render Glyphs Grid
+    // 3. Render Glyphs
     function renderGlyphs() {
         if(!currentFontObj) return;
         const total = currentFontObj.numGlyphs;
@@ -625,17 +622,14 @@
             box.className = 'glyph-box';
             
             const cvs = document.createElement('canvas');
-            cvs.width = 45 * ratio; cvs.height = 45 * ratio;
+            cvs.width = 40 * ratio; cvs.height = 40 * ratio;
             const ctx = cvs.getContext('2d');
             ctx.scale(ratio, ratio);
             
-            // Draw Glyph Path
-            glyph.getPath(6, 36, 28).draw(ctx);
+            glyph.getPath(5, 32, 24).draw(ctx);
             box.appendChild(cvs);
 
-            // Click to Inspect
             box.onclick = () => openGlyphModal(glyph, i);
-
             glyphGrid.appendChild(box);
         }
         glyphsShown = limit;
@@ -644,17 +638,16 @@
 
     loadMoreBtn.onclick = renderGlyphs;
 
-    // 4. Modal Glyph Inspector
+    // 4. Modal
     function openGlyphModal(glyph, index) {
         const ratio = window.devicePixelRatio || 2;
-        modalCanvas.width = 120 * ratio;
-        modalCanvas.height = 120 * ratio;
+        modalCanvas.width = 100 * ratio;
+        modalCanvas.height = 100 * ratio;
         const ctx = modalCanvas.getContext('2d');
         ctx.scale(ratio, ratio);
-        ctx.clearRect(0, 0, 120, 120);
+        ctx.clearRect(0, 0, 100, 100);
 
-        // Draw Centered Glyph
-        glyph.getPath(15, 95, 80).draw(ctx);
+        glyph.getPath(10, 80, 65).draw(ctx);
 
         document.getElementById('mIndex').innerText = index;
         document.getElementById('mName').innerText = glyph.name || 'N/A';
@@ -673,7 +666,7 @@
     document.getElementById('modalClose').onclick = () => glyphModal.classList.remove('active');
     glyphModal.onclick = (e) => { if(e.target === glyphModal) glyphModal.classList.remove('active'); };
 
-    // 5. Preview & Text Control
+    // 5. Update Preview Text
     function updatePreview() {
         wPreview.style.fontFamily = activeFontName;
         wPreview.style.fontSize = document.getElementById('wSize').value + "px";
@@ -685,16 +678,13 @@
         wPreview.innerText = document.getElementById('widgetInput').value;
     }
 
-    // Tool Buttons
     document.getElementById('btnBold').onclick = function() { isBold = !isBold; this.classList.toggle('active'); updatePreview(); };
     document.getElementById('btnItalic').onclick = function() { isItalic = !isItalic; this.classList.toggle('active'); updatePreview(); };
     document.getElementById('btnUnderline').onclick = function() { isUnderline = !isUnderline; this.classList.toggle('active'); updatePreview(); };
 
-    // Listeners
     document.getElementById('widgetInput').oninput = updatePreview;
     ['wSize', 'wLine', 'wSpace'].forEach(id => document.getElementById(id).oninput = updatePreview);
 
-    // Tab Switching
     function switchWTab(evt, tabId) {
         document.querySelectorAll('.w-section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.w-tab').forEach(t => t.classList.remove('active'));
