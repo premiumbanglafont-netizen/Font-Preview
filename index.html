@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bangla Font Master Pro - Font Preview & Glyph Inspector</title>
+    <title>Font Master Pro - Font Preview & Full Metadata Inspector</title>
     <!-- opentype.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
 
@@ -45,7 +45,7 @@
         .widget-header {
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             color: #ffffff;
-            padding: 32px 16px;
+            padding: 36px 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -66,7 +66,7 @@
             opacity: 0.9;
         }
 
-        /* Tabs */
+        /* Navigation Tabs */
         .widget-tabs {
             display: flex;
             background: #f8fafc;
@@ -76,7 +76,7 @@
 
         .w-tab {
             flex: 1;
-            padding: 12px 8px;
+            padding: 14px 8px;
             text-align: center;
             font-weight: 600;
             font-size: 14px;
@@ -224,7 +224,7 @@
             margin-top: 12px;
         }
 
-        /* Metadata Table */
+        /* Metadata Table Style */
         .meta-table-container {
             overflow-x: auto;
             border-radius: 8px;
@@ -251,9 +251,18 @@
         .info-table td:first-child {
             font-weight: 600;
             color: var(--text-muted);
-            width: 35%;
+            width: 38%;
             background: #f8fafc;
-            min-width: 120px;
+            min-width: 140px;
+        }
+
+        .section-header-row td {
+            background: #e2e8f0 !important;
+            color: #1e293b !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            font-size: 12px !important;
+            letter-spacing: 0.5px;
         }
 
         /* Modal Inspector */
@@ -319,7 +328,7 @@
     <!-- Header Drop Area -->
     <div class="widget-header" id="dropZone" onclick="document.getElementById('fontLoader').click()">
         <h2 id="topTitle">Font Master Pro</h2>
-        <p id="subTitle">এখানে ক্লিক করে ফন্ট ফাইল আপলোড করুন অথবা ড্রাগ অ্যান্ড ড্রপ করুন (.ttf, .otf, .woff)</p>
+        <p id="subTitle">ফন্ট ফাইল আপলোড বা ড্রাগ অ্যান্ড ড্রপ করুন (.ttf, .otf, .woff, .woff2)</p>
         <input type="file" id="fontLoader" accept=".ttf,.otf,.woff,.woff2" style="display: none;" />
     </div>
 
@@ -361,17 +370,17 @@
         <div class="w-section" id="w-glyphs">
             <div class="glyph-wall" id="wGlyphGrid">
                 <p style="color: #64748b; grid-column: 1/-1; padding: 20px; text-align: center;">
-                    ফন্ট ফাইল (.ttf/.otf/.woff) আপলোড করলে সম্পূর্ণ গ্লিফ চার্ট দেখা যাবে।
+                    ফন্ট ফাইল আপলোড করা হলে এখানে গ্লিফ চার্ট দেখতে পাবেন।
                 </p>
             </div>
             <button id="loadMoreBtn">আরও দেখুন (Load More)</button>
         </div>
 
-        <!-- Section 3: Detailed Metadata Table -->
+        <!-- Section 3: Full Metadata Table -->
         <div class="w-section" id="w-info">
             <div class="meta-table-container">
                 <table class="info-table" id="fullMetaTable">
-                    <tr><td>Status</td><td>কোনো ফন্ট ফাইল আপলোড করা হয়নি। উপরে ক্লিক করে ফাইল লোড করুন।</td></tr>
+                    <tr><td colspan="2" style="text-align:center; padding: 20px;">কোনো ফন্ট ফাইল লোড করা হয়নি। ফাইল আপলোড করুন।</td></tr>
                 </table>
             </div>
         </div>
@@ -407,19 +416,21 @@
     const dropZone = document.getElementById('dropZone');
     const fullMetaTable = document.getElementById('fullMetaTable');
 
-    // Modal
+    // Modal Elements
     const glyphModal = document.getElementById('glyphModal');
     const modalCanvas = document.getElementById('modalCanvas');
 
-    // Helper: Safely Extract Text from Opentype Names Table
-    function getNameRecord(names, field) {
-        if (!names || !names[field]) return 'N/A';
-        const item = names[field];
+    // Safe extraction of values from Name Table
+    function parseNameRecord(item) {
+        if (!item) return null;
         if (typeof item === 'string') return item;
-        return item.en || Object.values(item)[0] || 'N/A';
+        if (typeof item === 'object') {
+            return item.en || Object.values(item)[0] || null;
+        }
+        return null;
     }
 
-    // Drag & Drop & File Select
+    // Drag and Drop & Event Listeners
     ['dragenter', 'dragover'].forEach(evt => {
         dropZone.addEventListener(evt, (e) => { e.preventDefault(); dropZone.classList.add('dragover'); }, false);
     });
@@ -456,42 +467,106 @@
                 glyphsShown = 0;
                 renderGlyphs();
                 
-                // Extract Metadata
-                const n = currentFontObj.names || {};
-                const fontFam = getNameRecord(n, 'fontFamily') !== 'N/A' ? getNameRecord(n, 'fontFamily') : file.name;
-                
-                let metaHTML = `
-                    <tr><td>Font Family</td><td>${fontFam}</td></tr>
-                    <tr><td>Font Subfamily (Style)</td><td>${getNameRecord(n, 'fontSubfamily')}</td></tr>
-                    <tr><td>Full Font Name</td><td>${getNameRecord(n, 'fullName')}</td></tr>
-                    <tr><td>PostScript Name</td><td>${getNameRecord(n, 'postScriptName')}</td></tr>
-                    <tr><td>Unique ID</td><td>${getNameRecord(n, 'uniqueID')}</td></tr>
-                    <tr><td>Version</td><td>${getNameRecord(n, 'version')}</td></tr>
-                    <tr><td>Total Glyphs</td><td>${currentFontObj.numGlyphs || 'N/A'}</td></tr>
-                    <tr><td>Units Per Em</td><td>${currentFontObj.unitsPerEm || 'N/A'}</td></tr>
-                    <tr><td>Ascender / Descender</td><td>${currentFontObj.ascender} / ${currentFontObj.descender}</td></tr>
-                    <tr><td>Designer / Author</td><td>${getNameRecord(n, 'designer')}</td></tr>
-                    <tr><td>Manufacturer / Publisher</td><td>${getNameRecord(n, 'manufacturer')}</td></tr>
-                    <tr><td>Copyright</td><td>${getNameRecord(n, 'copyright')}</td></tr>
-                    <tr><td>Trademark</td><td>${getNameRecord(n, 'trademark')}</td></tr>
-                    <tr><td>License Description</td><td>${getNameRecord(n, 'license')}</td></tr>
-                    <tr><td>License URL</td><td>${getNameRecord(n, 'licenseURL')}</td></tr>
-                    <tr><td>Vendor URL</td><td>${getNameRecord(n, 'vendorURL')}</td></tr>
-                    <tr><td>File Name</td><td>${file.name}</td></tr>
-                    <tr><td>File Size</td><td>${(file.size / 1024).toFixed(2)} KB</td></tr>
-                `;
-
-                fullMetaTable.innerHTML = metaHTML;
-                document.getElementById('topTitle').innerText = fontFam;
-                document.getElementById('subTitle').innerText = `ফাইল আপলোড হয়েছে: ${file.name}`;
+                // Extract ALL Metadata Dynamically
+                renderFullMetadata(currentFontObj, file);
 
             } catch(err) { 
-                alert("ফন্ট ফাইলটি পার্স করা সম্ভব হয়নি! সঠিক .ttf, .otf বা .woff ফাইল ব্যবহার করুন।"); 
+                alert("ফন্ট ফাইলটি পড়তে সমস্যা হয়েছে! অনুগ্রহ করে সঠিক .ttf, .otf, .woff বা .woff2 ফাইল দিন।"); 
             }
             
             updatePreview();
         };
         reader.readAsArrayBuffer(file);
+    }
+
+    // Deep Full Metadata Extraction Engine
+    function renderFullMetadata(font, file) {
+        let rows = [];
+
+        // Helper to push rows
+        function addRow(label, value) {
+            if (value !== undefined && value !== null && value !== '') {
+                rows.push(`<tr><td>${label}</td><td>${value}</td></tr>`);
+            }
+        }
+
+        function addHeader(title) {
+            rows.push(`<tr class="section-header-row"><td colspan="2">${title}</td></tr>`);
+        }
+
+        // File Details
+        addHeader("File Details");
+        addRow("File Name", file.name);
+        addRow("File Size", (file.size / 1024).toFixed(2) + " KB");
+        addRow("File Type", file.type || "Font File");
+
+        // Font Naming Table (names)
+        addHeader("Font Naming Information");
+        const names = font.names || {};
+        const nameKeys = [
+            'fontFamily', 'fontSubfamily', 'fullName', 'postScriptName',
+            'uniqueID', 'version', 'designer', 'designerURL', 
+            'manufacturer', 'vendorURL', 'copyright', 'trademark', 
+            'license', 'licenseURL', 'description', 'sampleText'
+        ];
+
+        nameKeys.forEach(key => {
+            const val = parseNameRecord(names[key]);
+            if (val) {
+                // Capitalize key for display
+                const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                addRow(label, val);
+            }
+        });
+
+        // Font Metrics & Dimensions (tables.head & tables.hhea)
+        addHeader("Font Metrics & Dimensions");
+        addRow("Units Per Em", font.unitsPerEm);
+        addRow("Total Glyphs", font.numGlyphs);
+        addRow("Ascender", font.ascender);
+        addRow("Descender", font.descender);
+        addRow("Line Gap", font.tables?.hhea?.lineGap);
+        addRow("Advance Width Max", font.tables?.hhea?.advanceWidthMax);
+        addRow("Min Left Side Bearing", font.tables?.hhea?.minLeftSideBearing);
+        addRow("Min Right Side Bearing", font.tables?.hhea?.minRightSideBearing);
+        addRow("X Max Extent", font.tables?.hhea?.xMaxExtent);
+
+        // OS/2 Metrics (OS/2 Table)
+        if (font.tables?.os2) {
+            addHeader("OS/2 Metrics");
+            const os2 = font.tables.os2;
+            addRow("Weight Class", os2.usWeightClass);
+            addRow("Width Class", os2.usWidthClass);
+            addRow("Type (fsType)", os2.fsType);
+            addRow("Subscript Size (X/Y)", `${os2.ySubscriptXSize} x ${os2.ySubscriptYSize}`);
+            addRow("Superscript Size (X/Y)", `${os2.ySuperscriptXSize} x ${os2.ySuperscriptYSize}`);
+            addRow("Strikeout Size", os2.yStrikeoutSize);
+            addRow("Typo Ascender", os2.sTypoAscender);
+            addRow("Typo Descender", os2.sTypoDescender);
+            addRow("Typo Line Gap", os2.sTypoLineGap);
+            addRow("Win Ascent", os2.usWinAscent);
+            addRow("Win Descent", os2.usWinDescent);
+            addRow("X Height", os2.sxHeight);
+            addRow("Cap Height", os2.sCapHeight);
+        }
+
+        // PostScript Table (post)
+        if (font.tables?.post) {
+            addHeader("PostScript Settings");
+            const post = font.tables.post;
+            addRow("Format Version", post.version);
+            addRow("Italic Angle", post.italicAngle);
+            addRow("Underline Position", post.underlinePosition);
+            addRow("Underline Thickness", post.underlineThickness);
+            addRow("Is Fixed Pitch", post.isFixedPitch ? "Yes" : "No");
+        }
+
+        fullMetaTable.innerHTML = rows.join('');
+        
+        // Update Title UI
+        const mainTitle = parseNameRecord(names.fontFamily) || file.name;
+        document.getElementById('topTitle').innerText = mainTitle;
+        document.getElementById('subTitle').innerText = `ফাইল আপলোড সফল: ${file.name}`;
     }
 
     // Render Glyphs
@@ -551,7 +626,7 @@
     document.getElementById('modalClose').onclick = () => glyphModal.classList.remove('active');
     glyphModal.onclick = (e) => { if(e.target === glyphModal) glyphModal.classList.remove('active'); };
 
-    // Update Preview Text
+    // Preview Controls
     function updatePreview() {
         wPreview.style.fontFamily = activeFontName;
         wPreview.style.fontSize = document.getElementById('wSize').value + "px";
