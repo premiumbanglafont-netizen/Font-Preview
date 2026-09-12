@@ -177,12 +177,12 @@
             overflow-x: auto;
         }
 
-        /* Glyphs Grid - Bolder & Much Larger Boxes */
+        /* Glyphs Grid - All Glyphs Loaded at Once */
         .glyph-wall {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             gap: 14px;
-            max-height: 500px;
+            max-height: 550px;
             overflow-y: auto;
             background: #f8fafc;
             padding: 16px;
@@ -214,19 +214,6 @@
         .glyph-box canvas {
             width: 95px;
             height: 95px;
-        }
-
-        #loadMoreBtn {
-            background: var(--primary-color);
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            width: 100%;
-            cursor: pointer;
-            display: none;
-            font-weight: 600;
-            margin-top: 12px;
         }
 
         /* Metadata Table Style */
@@ -378,14 +365,13 @@
                     ফন্ট ফাইল আপলোড করা হলে এখানে গ্লিফ চার্ট দেখতে পাবেন।
                 </p>
             </div>
-            <button id="loadMoreBtn">আরও দেখুন (Load More)</button>
         </div>
 
         <!-- Section 3: Clean Metadata Table -->
         <div class="w-section" id="w-info">
             <div class="meta-table-container">
                 <table class="info-table" id="fullMetaTable">
-                    <tr><td colspan="2" style="text-align:center; padding: 20px;">কোনো ফন্ট ফাইল লোড করা হয়নি। ফাইল আপলোড করুন।</td></tr>
+                    <tr><td colspan="2" style="text-align:center; padding: 20px;">কোনো ফন্ট ফাইল লোড করা হয়নি। ফাইল আপলোড করুন।</td></tr>
                 </table>
             </div>
         </div>
@@ -411,13 +397,10 @@
     let activeFontName = "sans-serif";
     let isBold = false, isItalic = false, isUnderline = false;
     let currentFontObj = null;
-    let glyphsShown = 0;
-    const pageSize = 120;
 
     // UI Elements
     const wPreview = document.getElementById('wPreview');
     const glyphGrid = document.getElementById('wGlyphGrid');
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
     const dropZone = document.getElementById('dropZone');
     const fullMetaTable = document.getElementById('fullMetaTable');
 
@@ -468,12 +451,11 @@
             try {
                 currentFontObj = opentype.parse(buffer);
                 glyphGrid.innerHTML = '';
-                glyphsShown = 0;
-                renderGlyphs();
+                renderAllGlyphs();
                 renderCleanMetadata(currentFontObj, file);
 
             } catch(err) { 
-                alert("ফন্ট ফাইলটি পড়তে সমস্যা হয়েছে! অনুগ্রহ করে সঠিক .ttf, .otf, .woff বা .woff2 ফাইল দিন।"); 
+                alert("ফন্ট ফাইলটি পড়তে সমস্যা হয়েছে! অনুগ্রহ করে সঠিক .ttf, .otf, .woff বা .woff2 ফাইল দিন।"); 
             }
             
             updatePreview();
@@ -481,7 +463,7 @@
         reader.readAsArrayBuffer(file);
     }
 
-    // Cleaned Metadata Extraction (Only essential info & name table)
+    // Cleaned Metadata Extraction
     function renderCleanMetadata(font, file) {
         let rows = [];
 
@@ -524,14 +506,14 @@
         document.getElementById('subTitle').innerText = `ফাইল আপলোড সফল: ${file.name}`;
     }
 
-    // Render Glyphs - Extra Large Canvas & Glyph Font Size
-    function renderGlyphs() {
+    // Render ALL Glyphs at Once
+    function renderAllGlyphs() {
         if(!currentFontObj) return;
         const total = currentFontObj.numGlyphs;
-        const limit = Math.min(glyphsShown + pageSize, total);
         const ratio = window.devicePixelRatio || 2;
+        const fragment = document.createDocumentFragment();
 
-        for (let i = glyphsShown; i < limit; i++) {
+        for (let i = 0; i < total; i++) {
             const glyph = currentFontObj.glyphs.get(i);
             const box = document.createElement('div');
             box.className = 'glyph-box';
@@ -542,20 +524,18 @@
             const ctx = cvs.getContext('2d');
             ctx.scale(ratio, ratio);
             
-            // Scaled up font rendering (Size increased to 58 for max visibility)
+            // Draw Glyph Path
             glyph.getPath(14, 76, 58).draw(ctx);
             box.appendChild(cvs);
 
             box.onclick = () => openGlyphModal(glyph, i);
-            glyphGrid.appendChild(box);
+            fragment.appendChild(box);
         }
-        glyphsShown = limit;
-        loadMoreBtn.style.display = glyphsShown < total ? 'block' : 'none';
+
+        glyphGrid.appendChild(fragment);
     }
 
-    loadMoreBtn.onclick = renderGlyphs;
-
-    // Modal Inspector - Larger Preview Inside Modal
+    // Modal Inspector
     function openGlyphModal(glyph, index) {
         const ratio = window.devicePixelRatio || 2;
         modalCanvas.width = 140 * ratio;
